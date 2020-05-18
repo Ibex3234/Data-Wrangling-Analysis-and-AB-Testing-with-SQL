@@ -1,0 +1,32 @@
+-- Use this table to 
+-- compute order_binary for the 30 day window after the test_start_date
+-- for the test named item_test_2
+
+SELECT
+   test_number,
+   test_assignment,
+   sum(orders_binary_30d) as order_binary_30d,
+   count(item_id) as items
+FROM
+   (
+   SELECT 
+    fa.test_number           as test_number,
+    fa.test_assignment       as test_assignment,
+    fa.item_id               as item_id,
+    MAX(Case WHEN (o.created_at > fa.test_start_date AND 
+                       DATE_PART('day', o.created_at - fa.test_start_date) <=30) Then 1 ELSE 0 END) AS orders_binary_30d
+   FROM 
+    dsv1069.final_assignments as fa
+   Left Join
+    dsv1069.orders as o
+   ON 
+    fa.item_id = o.item_id
+   WHERE
+    fa.test_number = 'item_test_2'
+   Group BY
+     fa.test_number,
+     fa.test_assignment,
+     fa.item_id) AS order_binary_30d_table
+GROUP BY
+   test_number,
+   test_assignment

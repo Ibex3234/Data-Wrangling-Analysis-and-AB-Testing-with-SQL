@@ -1,0 +1,42 @@
+-- Use this table to 
+-- compute view_binary for the 30 day window after the test_start_date
+-- for the test named item_test_2
+
+
+
+SELECT
+   test_number,
+   test_assignment,
+   sum(views_binary_30d) as view_binary_30d,
+   count(item_id) as items
+FROM
+(
+   SELECT 
+    fa.test_number           as test_number,
+    fa.test_assignment       as test_assignment,
+    fa.item_id               as item_id,
+    MAX(Case WHEN (v.event_time > fa.test_start_date AND 
+                       DATE_PART('day', v.event_time - fa.test_start_date) <=30) Then 1 ELSE 0 END) AS views_binary_30d
+   FROM 
+    dsv1069.final_assignments as fa
+   Left Join
+   (
+   SELECT
+      *
+   FROM
+    dsv1069.events 
+   WHERE
+    event_name = 'view_item' AND
+    parameter_name = 'item_id'
+    ) as v
+   ON 
+    fa.item_id  = cast(v.parameter_value as int) 
+   WHERE
+    fa.test_number = 'item_test_2'
+   Group BY
+     fa.test_number,
+     fa.test_assignment,
+     fa.item_id) AS view_binary_30d_table
+GROUP BY
+   test_number,
+   test_assignment

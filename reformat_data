@@ -1,0 +1,52 @@
+--Reformat the final_assignments_qa to look like the final_assignments table, filling in any missing values with a placeholder of the appropriate data type.
+
+SELECT   
+  *
+From
+  (SELECT
+     item_id,
+     test_a as test_assignment,
+     case when test_a = 1 or test_a = 0 then 'item_test_a' end as test_letter,     
+     cast(null as DATE) as date
+  From 
+     dsv1069.final_assignments_qa
+  UNION
+  SELECT
+     item_id,
+     test_b as test_assignment,
+     case when test_b = 1 or test_b = 0 then 'item_test_b' end as test_letter,
+     cast(null as DATE) as test_start_date
+  From 
+     dsv1069.final_assignments_qa
+  UNION
+  SELECT
+     item_id,
+     test_c as test_assignment,
+     case when test_c = 1 or test_c = 0 then 'item_test_c' end as test_letter,
+     cast(null as DATE) as test_start_date
+  From 
+     dsv1069.final_assignments_qa
+  UNION
+  SELECT
+     item_id,
+     test_d as test_assignment,
+     case when test_d = 1 or test_d = 0 then 'item_test_d' end as test_letter,
+     cast(null as DATE) as test_start_date
+  From 
+     dsv1069.final_assignments_qa
+  UNION
+  SELECT
+     item_id,
+     test_e as test_assignment,
+     case when test_e = 1 or test_e = 0 then 'item_test_e' end as test_letter,
+     cast(null as DATE) as test_start_date
+  From 
+     dsv1069.final_assignments_qa
+  UNION
+  SELECT
+     item_id,
+     test_f as test_assignment,
+     case when test_f = 1 or test_f = 0 then 'item_test_f' end as test_letter,
+     cast(null as DATE) as test_start_date
+  From 
+     dsv1069.final_assignments_qa) as reordered
