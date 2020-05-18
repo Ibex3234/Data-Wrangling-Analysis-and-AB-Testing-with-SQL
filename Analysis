@@ -1,0 +1,7 @@
+--Use the https://thumbtack.github.io/abba/demo/abba.html to compute the lifts in metrics and the p-values for the binary metrics ( 30 day order binary and 30 day view binary) using a interval 95% confidence. 
+
+--Order binary
+--Lift in test_2 is -1%, with a P-Value of 0.88. This essentially means that while orders appear to decrease in the test sample, the high P-Value indicates that the evidence is not strong enough to conclusively say so
+--
+--View binary
+--Lift in test_2 is 2.6%, with a P-value of 0.20. This essentially means that while views appear to increase in the test sample, the high P-value indicates that the vidence is not strong enough to conclusively say so
